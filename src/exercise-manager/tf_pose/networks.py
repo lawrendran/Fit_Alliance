@@ -59,7 +59,7 @@ def get_network(type, placeholder_input, sess_for_load=None, trainable=True):
         net = Mobilenetv2Network({'image': placeholder_input}, conv_width=0.75, conv_width2=0.75, trainable=trainable)
         pretrain_path = 'pretrained/mobilenet_v2_0.75_224/mobilenet_v2_0.75_224.ckpt'
         last_layer = 'MConv_Stage6_L{aux}_5'
-    elif type == 'mobilenet_v2_w0.5_r0.5' or type == 'mobilenet_v2_small':                                # m_v2_fast
+    elif type in ['mobilenet_v2_w0.5_r0.5', 'mobilenet_v2_small']:                                # m_v2_fast
         net = Mobilenetv2Network({'image': placeholder_input}, conv_width=0.5, conv_width2=0.5, trainable=trainable)
         pretrain_path = 'pretrained/mobilenet_v2_0.5_224/mobilenet_v2_0.5_224.ckpt'
         last_layer = 'MConv_Stage6_L{aux}_5'

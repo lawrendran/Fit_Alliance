@@ -47,18 +47,24 @@ def plank( a, b, c, d, e, f):
         c and d are angle of legs
         e and f are distance between head to ankle because in plank distace will be maximum.
     '''
-    if (a in range(50,100) or b in range(50,100)) and (c in range(135,175) or d in range(135,175)) and (e in range(50,250) or f in range(50,250)):
-        return True
-    return False
+    return (
+        (a in range(50, 100) or b in range(50, 100))
+        and (c in range(135, 175) or d in range(135, 175))
+        and (e in range(50, 250) or f in range(50, 250))
+    )
 def mountain_pose( a, b, c, d, e):
     '''
         a is distance between two wrists
         b and c are angle between neck,shoulder and wrist 
         e and f are distance between head to ankle because in plank distace will be maximum.
     '''
-    if a in range(20,160) and b in range(60,140) and c in range(60,140) and d in range(100,145) and e in range(100,145):
-        return True
-    return False
+    return (
+        a in range(20, 160)
+        and b in range(60, 140)
+        and c in range(60, 140)
+        and d in range(100, 145)
+        and e in range(100, 145)
+    )
 def draw_str(dst, xxx_todo_changeme, s, color, scale):
     
     (x, y) = xxx_todo_changeme

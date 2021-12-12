@@ -74,8 +74,7 @@ class Smoother(object):
     def make_gauss_var(self, name, size, sigma, c_i):
         # with tf.device("/cpu:0"):
         kernel = self.gauss_kernel(size, sigma, c_i)
-        var = tf.Variable(tf.convert_to_tensor(kernel), name=name)
-        return var
+        return tf.Variable(tf.convert_to_tensor(kernel), name=name)
 
     def get_output(self):
         '''Returns the smoother output.'''

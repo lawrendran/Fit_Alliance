@@ -51,9 +51,8 @@ def _fixed_padding(inputs, kernel_size, rate=1):
   pad_total = [kernel_size_effective[0] - 1, kernel_size_effective[1] - 1]
   pad_beg = [pad_total[0] // 2, pad_total[1] // 2]
   pad_end = [pad_total[0] - pad_beg[0], pad_total[1] - pad_beg[1]]
-  padded_inputs = tf.pad(inputs, [[0, 0], [pad_beg[0], pad_end[0]],
+  return tf.pad(inputs, [[0, 0], [pad_beg[0], pad_end[0]],
                                   [pad_beg[1], pad_end[1]], [0, 0]])
-  return padded_inputs
 
 
 def _make_divisible(v, divisor, min_value=None):
@@ -75,10 +74,7 @@ def _set_arg_scope_defaults(defaults):
   Yields:
     context manager where all defaults are set.
   """
-  if hasattr(defaults, 'items'):
-    items = list(defaults.items())
-  else:
-    items = defaults
+  items = list(defaults.items()) if hasattr(defaults, 'items') else defaults
   if not items:
     yield
   else:
@@ -202,9 +198,9 @@ def mobilenet_base(  # pylint: disable=invalid-name
     conv_defs_overrides[
         (slim.conv2d, slim.separable_conv2d)] = {'padding': 'VALID'}
 
-  if output_stride is not None:
-    if output_stride == 0 or (output_stride > 1 and output_stride % 2):
-      raise ValueError('Output stride must be None, 1 or a multiple of 2.')
+  if output_stride is not None and (output_stride == 0 or
+                                    (output_stride > 1 and output_stride % 2)):
+    raise ValueError('Output stride must be None, 1 or a multiple of 2.')
 
   # a) Set the tensorflow scope
   # b) set padding to default: note we might consider removing this

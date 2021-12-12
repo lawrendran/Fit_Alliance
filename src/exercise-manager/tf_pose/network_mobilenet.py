@@ -8,7 +8,7 @@ from tf_pose import network_base
 class MobilenetNetwork(network_base.BaseNetwork):
     def __init__(self, inputs, trainable=True, conv_width=1.0, conv_width2=None):
         self.conv_width = conv_width
-        self.conv_width2 = conv_width2 if conv_width2 else conv_width
+        self.conv_width2 = conv_width2 or conv_width
         self.num_refine = 4
         network_base.BaseNetwork.__init__(self, inputs, trainable)
 
@@ -99,11 +99,14 @@ class MobilenetNetwork(network_base.BaseNetwork):
                self.get_output('MConv_Stage%d_L2_5' % self.get_refine_num())
 
     def restorable_variables(self):
-        vs = {v.op.name: v for v in tf.global_variables() if
-              'MobilenetV1/Conv2d' in v.op.name and
-              'RMSProp' not in v.op.name and 'Momentum' not in v.op.name and 'Ada' not in v.op.name
-              }
-        return vs
+        return {
+            v.op.name: v
+            for v in tf.global_variables()
+            if 'MobilenetV1/Conv2d' in v.op.name
+            and 'RMSProp' not in v.op.name
+            and 'Momentum' not in v.op.name
+            and 'Ada' not in v.op.name
+        }
 
     def get_refine_num(self):
         return self.num_refine + 1
