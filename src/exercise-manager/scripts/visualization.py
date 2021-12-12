@@ -30,7 +30,7 @@ class VideoFrames:
 
     def get_latest(self, at_time, remove_older=True):
         fs = [x for x in self.frames if x[0] <= at_time]
-        if len(fs) == 0:
+        if not fs:
             return None
 
         f = fs[-1]
@@ -54,7 +54,7 @@ def cb_pose(data):
 
     # ros topic to Person instance
     humans = []
-    for p_idx, person in enumerate(data.persons):
+    for person in data.persons:
         human = Human([])
         for body_part in person.body_part:
             part = BodyPart('', body_part.part_id, body_part.x, body_part.y, body_part.confidence)

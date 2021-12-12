@@ -24,9 +24,8 @@ class APIRequests():
     def vision(self, img):
         api_vision = '/vision/'
         base64 = self.jpg2base64(img)
-        out_file = open("file.txt", "wb")
-        out_file.write(base64)
-        out_file.close()
+        with open("file.txt", "wb") as out_file:
+            out_file.write(base64)
         files = {'file': (img, open(img, 'rb'))}
         endpoint = self.api_url + api_vision
         r = re.post(endpoint, files=files, headers=self.headers)
@@ -54,8 +53,7 @@ class Targets:
         left_fat = self.tar_fats - self.day_con['total_fat']
         self.day_con['total_carb'] = self.day_con['total_carb'] + (self.results['total_carb'] * self.unit)
         left_carbs = self.tar_carbs - self.day_con['total_carb']
-        nutrients = {'carbs' : left_carbs, 'fats':left_fat, "proteins":left_prot}
-        return nutrients
+        return {'carbs' : left_carbs, 'fats':left_fat, "proteins":left_prot}
 
     def day_con_update(self):
         with open("day_consumption.json", "w+") as outfile:

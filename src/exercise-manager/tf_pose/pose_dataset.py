@@ -290,9 +290,6 @@ class CocoPose(RNGDataFlow):
         idxs = np.arange(self.size())
         if self.is_train:
             self.rng.shuffle(idxs)
-        else:
-            pass
-
         keys = list(self.coco.imgs.keys())
         for idx in idxs:
             img_meta = self.coco.imgs[keys[idx]]
@@ -451,9 +448,9 @@ class DataFlowToQueue(threading.Thread):
                         sys.exit(-1)
                     except Exception as e:
                         logger.error('err type2, err={}, placeholders={}'.format(str(e), self.placeholders))
-                        if isinstance(e, RuntimeError) and 'closed Session' in str(e):
-                            pass
-                        else:
+                        if not isinstance(
+                            e, RuntimeError
+                        ) or 'closed Session' not in str(e):
                             logger.exception("Exception in {}:{}".format(self.name, str(e)))
                         sys.exit(-1)
             except Exception as e:
@@ -496,6 +493,4 @@ if __name__ == '__main__':
             t1 = time.time()
             CocoPose.display_image(dp[0], dp[1].astype(np.float32), dp[2].astype(np.float32))
             print(dp[1].shape, dp[2].shape)
-            pass
-
     logger.info('done')

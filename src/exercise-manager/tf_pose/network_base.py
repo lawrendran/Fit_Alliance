@@ -326,8 +326,7 @@ class BaseNetwork(object):
             weights = self.make_var('weights', shape=[dim, num_out])
             biases = self.make_var('biases', [num_out])
             op = tf.nn.relu_layer if relu else tf.nn.xw_plus_b
-            fc = op(feed_in, weights, biases, name=scope.name)
-            return fc
+            return op(feed_in, weights, biases, name=scope.name)
 
     @layer
     def softmax(self, input, name):

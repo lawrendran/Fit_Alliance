@@ -118,7 +118,7 @@ def read_imgfile(path, width=None, height=None):
 
 
 def get_sample_images(w, h):
-    val_image = [
+    return [
         read_imgfile('./images/p1.jpg', w, h),
         read_imgfile('./images/p2.jpg', w, h),
         read_imgfile('./images/p3.jpg', w, h),
@@ -132,7 +132,6 @@ def get_sample_images(w, h):
         read_imgfile('./images/handsup1.jpg', w, h),
         read_imgfile('./images/p3_dance.png', w, h),
     ]
-    return val_image
 
 
 def to_str(s):

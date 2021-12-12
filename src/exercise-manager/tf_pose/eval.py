@@ -71,7 +71,6 @@ if __name__ == '__main__':
     if args.data_idx < 0:
         if eval_size > 0:
             keys = keys[:eval_size]  # only use the first #eval_size elements.
-        pass
     else:
         keys = [keys[args.data_idx]]
     logger.info('validation %s set size=%d' % (coco_json_file, len(keys)))
@@ -88,7 +87,7 @@ if __name__ == '__main__':
 
     result = []
     tqdm_keys = tqdm(keys)
-    for i, k in enumerate(tqdm_keys):
+    for k in tqdm_keys:
         img_meta = cocoGt.loadImgs(k)[0]
         img_idx = img_meta['id']
 
@@ -150,10 +149,8 @@ if __name__ == '__main__':
 
             plt.show()
 
-    fp = open(write_json, 'w')
-    json.dump(result, fp)
-    fp.close()
-
+    with open(write_json, 'w') as fp:
+        json.dump(result, fp)
     cocoDt = cocoGt.loadRes(write_json)
     cocoEval = COCOeval(cocoGt, cocoDt, 'keypoints')
     cocoEval.params.imgIds = keys

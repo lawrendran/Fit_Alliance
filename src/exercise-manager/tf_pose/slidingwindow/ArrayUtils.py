@@ -73,15 +73,14 @@ def arrayCast(source, dtype):
 	
 	# Determine the number of bytes required to store the array
 	requiredBytes = _requiredSize(source.shape, dtype)
-	
+
 	# Determine if there is sufficient available memory
 	vmem = psutil.virtual_memory()
 	if vmem.available > requiredBytes:
 		return source.astype(dtype, subok=False)
-	else:
-		dest = arrayFactory(source.shape, dtype)
-		np.copyto(dest, source, casting='unsafe')
-		return dest
+	dest = arrayFactory(source.shape, dtype)
+	np.copyto(dest, source, casting='unsafe')
+	return dest
 
 
 def determineMaxWindowSize(dtype, limit=None):

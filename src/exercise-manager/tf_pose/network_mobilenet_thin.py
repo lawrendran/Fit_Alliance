@@ -8,7 +8,7 @@ from tf_pose import network_base
 class MobilenetNetworkThin(network_base.BaseNetwork):
     def __init__(self, inputs, trainable=True, conv_width=1.0, conv_width2=None):
         self.conv_width = conv_width
-        self.conv_width2 = conv_width2 if conv_width2 else conv_width
+        self.conv_width2 = conv_width2 or conv_width
         network_base.BaseNetwork.__init__(self, inputs, trainable)
 
     def setup(self):
@@ -96,11 +96,10 @@ class MobilenetNetworkThin(network_base.BaseNetwork):
         return self.get_output('MConv_Stage6_L1_5'), self.get_output('MConv_Stage6_L2_5')
 
     def restorable_variables(self):
-        vs = {v.op.name: v for v in tf.global_variables() if
+        return {v.op.name: v for v in tf.global_variables() if
               'MobilenetV1/Conv2d' in v.op.name and
               # 'global_step' not in v.op.name and
               # 'beta1_power' not in v.op.name and 'beta2_power' not in v.op.name and
               'RMSProp' not in v.op.name and 'Momentum' not in v.op.name and
               'Ada' not in v.op.name and 'Adam' not in v.op.name
               }
-        return vs

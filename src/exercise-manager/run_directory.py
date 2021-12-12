@@ -37,7 +37,7 @@ if __name__ == '__main__':
     e = TfPoseEstimator(get_graph_path(args.model), target_size=(w, h))
 
     files_grabbed = glob.glob(os.path.join(args.folder, '*.jpg'))
-    all_humans = dict()
+    all_humans = {}
     for i, file in enumerate(files_grabbed):
         # estimate human poses from a single image !
         image = common.read_imgfile(file, None, None)
